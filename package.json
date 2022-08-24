@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "zene-repo",
+  "version": "1.0.0",
+  "description": "making my music app server-client based",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon ./backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akiboy108/ZENE-repo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akiboy108/ZENE-repo/issues"
+  },
+  "homepage": "https://github.com/Akiboy108/ZENE-repo#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

@@ -2,7 +2,7 @@
     "genres": [
         {
             "id": 1,
-            "genre": "rock/metal"
+            "genre": "Rock/metal"
         },
         {
             "id": 2,
@@ -10,19 +10,35 @@
         },
         {
             "id": 3,
-            "genre": "pop"
+            "genre": "Pop"
         },
         {
             "id": 4,
-            "genre": "ncs"
+            "genre": "Ncs"
         },
         {
             "id": 5,
-            "genre": "bass"
+            "genre": "Bass"
         },
         {
             "id": 6,
-            "genre": "else"
+            "genre": "Retro"
+        },
+        {
+            "id": 7,
+            "genre": "Jazz"
+        },
+        {
+            "id": 8,
+            "genre": "Swing/electro-swing"
+        },
+        {
+            "id": 9,
+            "genre": "House"
+        },
+        {
+            "id": 10,
+            "genre": "Else"
         }
     ]
 }
