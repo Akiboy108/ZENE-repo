@@ -1,0 +1,28 @@
+{
+    "genres": [
+        {
+            "id": 1,
+            "genre": "rock/metal"
+        },
+        {
+            "id": 2,
+            "genre": "EDM"
+        },
+        {
+            "id": 3,
+            "genre": "pop"
+        },
+        {
+            "id": 4,
+            "genre": "ncs"
+        },
+        {
+            "id": 5,
+            "genre": "bass"
+        },
+        {
+            "id": 6,
+            "genre": "else"
+        }
+    ]
+}
