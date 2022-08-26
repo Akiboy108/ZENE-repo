@@ -1,8 +1,9 @@
 const root = document.querySelector('#root');
 let playlist = [];
 let name = '';
-let newID = playlist.reduce((prev, curr) => prev.id > curr.id ? prev : curr, { id: 0 }).id + 1;
+let newID;
 
+let userObj = {};
 
 async function initRender() {
     root.addEventListener('input', globalInputHandler);
@@ -13,26 +14,26 @@ async function initRender() {
 }
 
 async function globalClickHandler(event) {
+    newID = playlist.reduce((prev, curr) => prev.id > curr.id ? prev : curr, { id: 0 }).id + 1;
     let input = document.querySelector("#playListInput");
-    let url = '/api/add';
+
+    let url = `/api/add/${input.value.split(" ").join('_').toLowerCase()}`;
     if (event.target.id === 'createPlaylistButton') {
-        PLname = input.value; //PlayListname
-        playlist[PLname] = {};
+        PLname = input.value.split(" ").join('_'); //PlayListname
+        //playlist.PLname[name] = PLname.split(' ').join('_');
         playlist.id = newID;
-        console.log(playlist);
 
         fetch(url, {
             body: JSON.stringify({
-                playlist: playlist
+                "playlist": playlist
             }),
-            method: 'post',
+            method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
         });
         location.assign('/')
+        //location.assign(`/user/${input.value.split(" ").join('-')}`);
     }
 }
-
-
 
 function globalInputHandler(event) {
 

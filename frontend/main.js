@@ -10,14 +10,16 @@ async function initRender() {
 }
 
 async function getPlaylists() {
-    let url = '/api/personalplaylist';
+    let url = `/api/personalplaylist`;
     let response = await fetch(url);
-    let result = await response.json();
-
-    rootElement.insertAdjacentHTML('beforeend', showCreatePlaylist());
-
-
-    allPlaylists.push(result);
+    if (!response.ok) {
+        rootElement.insertAdjacentHTML('beforeend', showCreatePlaylist());
+        throw new Error("Page doesn't exist yet!", { cause: response });
+    }
+    else {
+        let result = await response.json();
+        allPlaylists.push(result);
+    }
     console.log('ALL: ', allPlaylists)
     initAllPlaylist(allPlaylists)
 }
@@ -35,7 +37,7 @@ function showCreatePlaylist() {
 }
 
 async function initAllPlaylist(playlists) {
-    let url = '/api/music';
+    let url = '/api/personalplaylist';
     let response = await fetch(url);
     let result = await response.json();
     console.log(result);
@@ -56,9 +58,15 @@ function displayAllPlaylists() {
     return `
         <div id='maindisplay'>
             <h1>Select your playlist</h1>
-            <div>
-                ${allPlaylists}
-            </div>
+                ${AddPlaylist(allPlaylists.map(x => x))}
+        </div>
+    `
+}
+
+function AddPlaylist(playlist) {
+    return `
+        <div id="${playlist.name}Div">
+         ${playlist.name.toUpperCase()}
         </div>
     `
 }

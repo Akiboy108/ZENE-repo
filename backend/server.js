@@ -14,9 +14,9 @@ app.get('/api/music', (req, res) => {
     res.send(data);
 });
 
-app.get('/api/personalplaylist/:name', (req, res) => {
-    const data = JSON.parse(fs.readFileSync('./backend/akosPlaylist.json', 'utf8'));
-    res.send(data.req.params.name);
+app.get('/api/personalplaylist', (req, res) => {
+    const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
+    res.send(data.playlist);
 });
 
 app.get('/api/filterByGenre', (req, res) => {
@@ -24,17 +24,17 @@ app.get('/api/filterByGenre', (req, res) => {
     res.send(data);
 });
 
-app.post('/api/add', (req, res) => {
+app.post('/api/add/:name', (req, res) => {
     const body = req.body;
     const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
     let newID = data.playlist.reduce((prev, curr) => prev.id > curr.id ? prev : curr, { id: 0 }).id + 1;
-    const newSong = { id: newID, artist: body.artist, title: body.title, genre: body.genre, duration: body.duration }
+    const newSong = { id: newID, name: req.params.name, [req.params.name]: body.playlist }
     const newArtist = { name: body.artist }
     data.playlist.push(newSong);
-    data.artists.push(newArtist)
+    /* data.artists.push(newArtist); */
     fs.writeFileSync('./backend/playlist.json', JSON.stringify(data, undefined, 4), 'utf8');
-    fs.writeFileSync('./backend/artists.json', JSON.stringify(data, undefined, 4), 'utf8');
-    res.send(newSong, newArtist);
+    //fs.writeFileSync('./backend/artists.json', JSON.stringify(data, undefined, 4), 'utf8');
+    res.send(newSong);
 });
 
 app.use(express.static('./frontend'));
