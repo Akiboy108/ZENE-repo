@@ -16,7 +16,13 @@ app.get('/api/music', (req, res) => {
 
 app.get('/api/personalplaylist', (req, res) => {
     const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
-    res.send(data.playlist);
+    if (data.playlist.length === 0) {
+        res.send(Error)
+    }
+    else {
+
+        res.send(data);
+    }
 });
 
 app.get('/api/filterByGenre', (req, res) => {

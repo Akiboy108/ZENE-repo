@@ -1,3 +1,14 @@
 {
-    "playlist": []
+    "playlist": [
+        {
+            "id": 1,
+            "name": "akos",
+            "akos": []
+        },
+        {
+            "id": 2,
+            "name": "gellert",
+            "gellert": []
+        }
+    ]
 }

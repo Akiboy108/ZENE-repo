@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "ZENE-repo",
+			"path": ".."
+		},
+		{
+			"name": "frontend",
+			"path": "..\\..\\Akos-test-website\\ZENE\\frontend"
+		},
+		{
+			"name": "backend",
+			"path": "..\\..\\Akos-test-website\\ZENE\\backend"
+		}
+	],
+	"settings": {}
+}

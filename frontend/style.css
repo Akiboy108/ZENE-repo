@@ -1,0 +1,14 @@
+body {
+    background-color: #202124;
+    color: #bdc1c6;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.clickablePlaylistDiv {
+    padding: 10px;
+    position: absolute;
+}
+
+.clickablePlaylistDiv:hover {
+    cursor: pointer;
+}
