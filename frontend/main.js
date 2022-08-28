@@ -24,6 +24,10 @@ async function getPlaylists() {
     }
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function showCreatePlaylistIfNone() {
     return `
         <div id="createPL">
@@ -54,6 +58,7 @@ function showCreatePlaylist() {
 } */
 
 function globalClickEventHandler(event) {
+    let datasetID = +event.target.dataset.id;
     if (event.target.id === 'nextPage') {
         console.log('click')
         location.assign(`/music/list`);
@@ -62,24 +67,58 @@ function globalClickEventHandler(event) {
         console.log('click create btn');
         location.assign('/create')
     }
+    if (event.target.id === `editCol`) {
+        console.log('editCol')
+    }
+    if (event.target.id === `delCol`) {
+        console.log('delCol')
+    }
+
 }
 
 function displayAllPlaylists(playlists) {
-    console.log('asdasdasdasdadasdads: ', playlists)
     return `
         <div id='maindisplay'>
             <h1>Select your playlist</h1>
-                ${playlists.map(x => AddPlaylist(x)).join('')}
+            <table id="PLTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                    <tbody id="playlistTableBody">
+                        ${playlists.map(x => AddPlaylist(x)).join('')}
+                    </tbody>
+            </table>
+                
         </div>
     `
 }
 
 function AddPlaylist(playlist) {
     return `
-        <div id="${playlist.name}Div class="clickablePlaylistDiv">
-            <h3>${playlist.id}.- ${playlist.name.split("_").join(' ')}</h3>
-        </div>
+    
+        <tr  id="${playlist.name}Row" data-id=${playlist.name}>
+            <td id="nameCol" class="clickablePlaylistDiv">
+                <div>
+                    ${capitalizeFirstLetter(playlist.name.split("_").join(' '))}
+                </div>
+            </td>
+            <td class="editCol">
+                <button id="editCol" class="fa fa-edit"></button>
+            </td>
+            <td class="delCol"> 
+                <button id="delCol" class="fa fa-trash"></button>
+            </td>
+        </tr>
+    
     `
+}
+
+function removePlaylist() {
+
 }
 
 function refreshDisplay() {

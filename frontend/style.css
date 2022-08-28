@@ -4,11 +4,130 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.clickablePlaylistDiv {
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.fa {
+    pointer-events: none;
+    position: relative;
+    top: 50%;
+}
+
+/* --------------------------TABLE---------------------------------- */
+thead {
+    font-size: x-large;
+    font-weight: 300;
+}
+
+tr {
     padding: 10px;
-    position: absolute;
+}
+
+td {
+    border: 1px solid grey;
+}
+
+#PLTable {
+    left: 50%;
+    width: 100%;
+}
+
+#nameCol {
+    width: 80%;
+    padding: 20px;
+}
+
+.delCol {
+    border-radius: 3px;
+    width: 10%;
+}
+
+.editCol {
+    border-radius: 3px;
+}
+
+.delCol:hover {
+    cursor: pointer;
+    background-color: rgba(255, 23, 23, 0.4);
+    transition: all 0.3s;
+}
+
+.editCol:hover {
+    cursor: pointer;
+    background-color: rgb(255, 216, 23, 0.4);
+    transition: all 0.3s;
+}
+
+/* --------------------PLAYLIST-DIV----------------------- */
+
+.clickablePlaylistDiv {
+    align-items: center;
+    font-size: larger;
+    justify-content: center;
+    padding: 10px;
+    height: 40px;
+    border-radius: 3px;
+    position: relative;
+    text-align: center;
 }
 
 .clickablePlaylistDiv:hover {
     cursor: pointer;
+    background-color: rgb(38, 99, 122, 0.3);
+    transition: all 0.3s;
+}
+
+/* ---------------------------ADD-BUTTON------------------------- */
+
+#createPL {
+    left: 50%;
+    width: 100%;
+    height: fit-content;
+}
+
+#createPLBtn {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 10px;
+    width: 200px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: large;
+}
+
+#createPLBtn:hover {
+    cursor: pointer;
+    background-color: #bdc1c6;
+}
+
+/* ----------------------EDIT-BUTTON--------------------- */
+.fa-edit {
+    background-color: transparent;
+    position: inherit;
+    color: #bdc1c6;
+    scale: 1.6;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 78px;
+}
+
+/* ----------------------DELETE-BUTTON--------------------- */
+.fa-trash {
+    background-color: transparent;
+    position: inherit;
+    color: #bdc1c6;
+    scale: 1.6;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 78px;
 }
