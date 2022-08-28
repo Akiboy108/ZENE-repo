@@ -3,3 +3,37 @@ body {
     color: #bdc1c6;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.fa {
+    pointer-events: none;
+    cursor: pointer;
+}
+
+#playListInput {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+#createPlaylistButton {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 10px;
+    width: 200px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: large;
+}
+
+#createPlaylistButton:hover {
+    cursor: pointer;
+    background-color: #bdc1c6;
+}
