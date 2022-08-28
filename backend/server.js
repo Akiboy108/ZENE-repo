@@ -34,14 +34,31 @@ app.post('/api/add/:name', (req, res) => {
     const body = req.body;
     const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
     let newID = data.playlist.reduce((prev, curr) => prev.id > curr.id ? prev : curr, { id: 0 }).id + 1;
-    const newSong = { id: newID, name: req.params.name, [req.params.name]: body.playlist }
+    const newPlaylist = { id: newID, name: req.params.name, [req.params.name]: body.playlist }
     const newArtist = { name: body.artist }
-    data.playlist.push(newSong);
+    data.playlist.push(newPlaylist);
     /* data.artists.push(newArtist); */
     fs.writeFileSync('./backend/playlist.json', JSON.stringify(data, undefined, 4), 'utf8');
     //fs.writeFileSync('./backend/artists.json', JSON.stringify(data, undefined, 4), 'utf8');
-    res.send(newSong);
+    res.send(newPlaylist);
 });
+
+app.delete('/api/delete', (req, res) => {
+    const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
+});
+
+/* app.post('/api/add/:name', (req, res) => {
+    const body = req.body;
+    const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
+    let newID = data.playlist.reduce((prev, curr) => prev.id > curr.id ? prev : curr, { id: 0 }).id + 1;
+    const newSong = { id: newID, name: req.params.name, [req.params.name]: body.playlist }
+    const newArtist = { name: body.artist }
+   data.playlist.push(newSong);
+    data.artists.push(newArtist);
+    fs.writeFileSync('./backend/playlist.json', JSON.stringify(data, undefined, 4), 'utf8');
+    fs.writeFileSync('./backend/artists.json', JSON.stringify(data, undefined, 4), 'utf8');
+    res.send(newSong);
+}); */
 
 app.use(express.static('./frontend'));
 app.listen(9000);
