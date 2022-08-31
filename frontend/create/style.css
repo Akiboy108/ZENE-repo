@@ -16,7 +16,7 @@ body {
     padding: 10px;
     outline: none;
     border: none;
-    border-radius: 3px;
+    border-radius: 30px 30px 30px 30px;
     margin-bottom: 20px;
 }
 
@@ -28,7 +28,7 @@ body {
     width: 200px;
     outline: none;
     border: none;
-    border-radius: 3px;
+    border-radius: 30px 30px 30px 30px;
     font-weight: 500;
     font-size: large;
 }

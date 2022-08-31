@@ -1,3 +1,7 @@
+/* * {
+    outline: 1px solid rgba(0, 128, 0, 0.427);
+} */
+
 body {
     background-color: #202124;
     color: #bdc1c6;
@@ -13,7 +17,6 @@ h2 {
 }
 
 .fa {
-    pointer-events: none;
     position: relative;
     top: 50%;
 }
@@ -33,33 +36,33 @@ td {
 }
 
 #PLTable {
+    position: relative;
     left: 50%;
-    width: 100%;
+    transform: translate(-50%, 0);
+    width: 70%;
 }
 
 #nameCol {
+    display: flex;
+    flex-wrap: wrap;
     width: 80%;
     padding: 20px;
 }
 
-.delCol {
-    border-radius: 3px;
-    width: 10%;
+#delCol {
+    position: relative;
+    border-radius: 3px 40px 40px 3px;
+    width: 100%;
 }
 
-.editCol {
-    border-radius: 3px;
+.delButton {
+    width: 25%;
+    border-radius: 3px 40px 40px 3px;
 }
 
-.delCol:hover {
+#delCol:hover {
     cursor: pointer;
     background-color: rgba(255, 23, 23, 0.4);
-    transition: all 0.3s;
-}
-
-.editCol:hover {
-    cursor: pointer;
-    background-color: rgb(255, 216, 23, 0.4);
     transition: all 0.3s;
 }
 
@@ -71,14 +74,14 @@ td {
     justify-content: center;
     padding: 10px;
     height: 40px;
-    border-radius: 3px;
+    border-radius: 40px 3px 3px 40px;
     position: relative;
     text-align: center;
 }
 
 .clickablePlaylistDiv:hover {
     cursor: pointer;
-    background-color: rgb(38, 99, 122, 0.3);
+    background-color: rgba(27, 140, 40, 0.382);
     transition: all 0.3s;
 }
 
@@ -98,7 +101,7 @@ td {
     width: 200px;
     outline: none;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px 30px 30px 30px;
     font-weight: 500;
     font-size: large;
 }
@@ -125,9 +128,12 @@ td {
     background-color: transparent;
     position: inherit;
     color: #bdc1c6;
-    scale: 1.6;
     border: none;
     outline: none;
-    width: 100%;
+    width: min-content;
     height: 78px;
+}
+
+button {
+    outline: 2px solid red;
 }

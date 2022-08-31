@@ -2,8 +2,8 @@ const root = document.querySelector('#root');
 let playlist = [];
 let name = '';
 let newID;
-
 let userObj = {};
+
 
 async function initRender() {
     root.addEventListener('input', globalInputHandler);
@@ -30,9 +30,16 @@ async function globalClickHandler(event) {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
         });
+        //createJSON(playlist)
         location.assign('/')
         //location.assign(`/user/${input.value.split(" ").join('-')}`);
     }
+}
+
+function createJSON(playlist) {
+    let list = playlist;
+    console.log('createJSON:::', list);
+    fs.writeFileSync(path.resolve(__dirname, `${list.name}.json`), JSON.stringify(playlist));
 }
 
 function globalInputHandler(event) {
