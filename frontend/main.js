@@ -1,6 +1,5 @@
-let rootElement;
 let allPlaylists = [];
-
+let rootElement;
 async function initRender() {
     rootElement = document.querySelector('#root');
     /* rootElement.addEventListener('submit', globalSubmitHandler); */
@@ -16,7 +15,7 @@ async function initRender() {
                 {...}
             ]
         ]
-
+ 
         result = {
             "playlist": [
                 {1}
@@ -49,24 +48,26 @@ function capitalizeFirstLetter(string) {
 
 function showCreatePlaylistIfNone() {
     return `
-        <div id="createPL">
-            <div>
-                <h1>You don't have any playlists yet.<h1>
-                <h2>Let's create one!<h2>
+            <div id="createPL">
+                <div>
+                    <h1>You don't have any playlists yet.<h1>
+                    <h2>Let's create one!<h2>
+                </div>
+                <button type="button" id="createPLBtn">Create Playlist</button>
             </div>
-            <button type="button" id="createPLBtn">Create Playlist</button>
-        </div>
-    `
+        `
 }
+
 function showCreatePlaylist() {
     return `
-        <div id="createPL">
-            <br>
-            <br>
-            <button id="createPLBtn">Add New</button>
-        </div>
-    `
+            <div id="createPL">
+                <br>
+                <br>
+                <button id="createPLBtn">Add New</button>
+            </div>
+        `
 }
+
 
 /* async function initAllPlaylist(result) {
     let url = '/api/personalplaylist';
@@ -76,8 +77,9 @@ function showCreatePlaylist() {
     console.log('ASD: ', allPlaylists.map(x => { console.log(x); displayAllPlaylists(x) }))
 } */
 
-function globalClickHandler(event) {
+async function globalClickHandler(event) {
     event.preventDefault();
+    console.log(event.target)
     let datasetID = +event.target.dataset.id;
     if (event.target.id === 'createPLBtn') {
         console.log('click');
@@ -91,53 +93,74 @@ function globalClickHandler(event) {
         console.log(event.type)
         removePlaylist(datasetID)
     }
+
     if (event.target.id === clickedObj.name) {
-        console.log('NAME::: ', clickedObj.name)
+        await sendClickedListData(clickedObj)
+        location.assign('/user');
     }
 }
+
+async function sendClickedListData(co) {
+    let url = `/api/sendData/:${co.name}`
+    fetch(url, {
+        body: JSON.stringify({ "id": co.id, "name": co.name }),
+        method: 'post',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+    })
+}
+
+/* async function showChoosenPlaylist(co) {
+    let url = `/api/getSongs/${co.name}`
+    let response = await fetch(url);
+
+    if (!response.ok || response === undefined) {
+        rootElement.replaceChildren();
+        getGenres();
+        throw new Error("No songs", { cause: response });
+    }
+    else {
+        let result = await response.json() //result => playlist.json                                
+        refreshDisplay();
+    }
+} */
 
 function searchClickedList(e) {
     let res = allPlaylists[0].filter(x => x.name === e.target.id);
     return res;
 }
 
-async function fetchForNewSong(id) {
-    let url = `/api/addSong/${id}`
-    let response = fetch(url);
-}
-
 function displayAllPlaylists(playlists) {
     playlists.map(x => console.log(x.id + "'s name:", x.name));
     return `
-        <div id='maindisplay'>
-            <h1>Select your playlist</h1>
-            <table id="PLTable">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody id="playlistTableBody">
-                    ${playlists.map(x => AddPlaylist(x)).join('')}
-                </tbody>
-            </table>
-        </div>
-    `
+            <div id='maindisplay'>
+                <h1>Select your playlist</h1>
+                <table id="PLTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="playlistTableBody">
+                        ${playlists.map(x => AddPlaylist(x)).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `
 }
 
 function AddPlaylist(playlist) {
     return `
-        <tr  id="${playlist.name}Row"  id="nameCol">
-            <td id="${playlist.name}" class="clickablePlaylistDiv" data-id=${playlist.id}>
-                ${capitalizeFirstLetter(playlist.name.split("_").join(' '))}
-            </td>
-            <td class="delButton">
-                <button type="button" id="delCol" class="fa fa-trash" data-id=${playlist.id}></button>
-            </td>
-        </tr>
-    
-    `
+            <tr  id="${playlist.name}Row"  id="nameCol">
+                <td id="${playlist.name}" class="clickablePlaylistDiv" data-id=${playlist.id}>
+                    ${capitalizeFirstLetter(playlist.name.split("_").join(' '))}
+                </td>
+                <td class="delButton">
+                    <button type="button" id="delCol" class="fa fa-trash" data-id=${playlist.id}></button>
+                </td>
+            </tr>
+        
+        `
 }
 
 async function removePlaylist(id) {
@@ -161,5 +184,6 @@ function refreshDisplay() {
         rootElement.insertAdjacentHTML('beforeend', showCreatePlaylist());
     }
 }
+
 
 window.addEventListener('load', initRender);

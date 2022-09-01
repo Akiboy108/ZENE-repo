@@ -36,12 +36,6 @@ async function globalClickHandler(event) {
     }
 }
 
-function createJSON(playlist) {
-    let list = playlist;
-    console.log('createJSON:::', list);
-    fs.writeFileSync(path.resolve(__dirname, `${list.name}.json`), JSON.stringify(playlist));
-}
-
 function globalInputHandler(event) {
 
 }
@@ -61,6 +55,7 @@ function createMainContainer() {
 function createPlayList() {
     return `
         <div class="createPlaylist">
+        <h1>Create your playlist:</h1>
             <div id="createPlaylistDiv">
                 <input type="text", id="playListInput" placeholder="Name of the playlist">
             </div>
