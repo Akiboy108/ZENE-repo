@@ -22,6 +22,7 @@ body {
 
 #createPlaylistButton {
     position: relative;
+    color: #202124;
     left: 50%;
     transform: translate(-50%, 0);
     padding: 10px;
@@ -33,7 +34,54 @@ body {
     font-size: large;
 }
 
+.input {
+    color: #202124;
+    padding: 10px;
+    border-radius: 30px 30px 30px 30px;
+    width: 220px;
+    outline: none;
+    border: none;
+}
+
+#pwContainer {
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#showPWContainer {
+    align-items: center;
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+#showPassword {
+    width: 50px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 20px 20px 20px 20px;
+}
+
+.passwordMessage {
+    font-size: larger;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    color: rgba(254, 83, 53, 0.915);
+}
+
+#showPassword:hover {
+    cursor: pointer;
+    background-color: #bdc1c6;
+}
+
 #createPlaylistButton:hover {
     cursor: pointer;
+
     background-color: #bdc1c6;
 }
