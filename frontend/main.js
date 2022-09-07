@@ -1,9 +1,11 @@
 let allPlaylists = [];
 let rootElement;
+let delSetID;
+
 async function initRender() {
     rootElement = document.querySelector('#root');
     /* rootElement.addEventListener('submit', globalSubmitHandler); */
-    rootElement.addEventListener('click', globalClickHandler);
+    document.body.addEventListener('click', globalClickHandler);
     await getPlaylists();
 
 }
@@ -35,9 +37,9 @@ async function getPlaylists() {
     else {
         let result = await response.json() //result => playlist.json                                
         allPlaylists.push(result.playlist)
-        allPlaylists[0].map(x => console.warn('playlist.json.map(): ', x))
-        allPlaylists.map(x => console.warn('all array.map: ', x))
-        console.warn('allPlaylist: ', allPlaylists);
+        //allPlaylists[0].map(x => console.warn('playlist.json.map(): ', x))
+        //allPlaylists.map(x => console.warn('all array.map: ', x))
+        //console.warn('allPlaylist: ', allPlaylists);
         refreshDisplay();
     }
 }
@@ -79,10 +81,11 @@ function showCreatePlaylist() {
 
 async function globalClickHandler(event) {
     event.preventDefault();
-    console.log(event.target)
     let datasetID = +event.target.dataset.id;
+    let userinputpw;
+
     if (event.target.id === 'createPLBtn') {
-        console.log('click');
+        //console.log('click');
         location.assign('/create')
     }
 
@@ -90,14 +93,64 @@ async function globalClickHandler(event) {
     let clickedObj = clicked[0];
 
     if (event.target.id === `delCol`) {
-        console.log(event.type)
-        removePlaylist(datasetID)
+        rootElement.style.filter = 'blur(5px)';
+        delSetID = +event.target.dataset.id;
+        validatePassword();
     }
+    if (event.target.id === 'okBtn') {
+        //console.log(delSetID)
+        if (givenPW() === await realPW(delSetID)) {
+            let validateBox = document.querySelector('#delBox');
+            removePlaylist(delSetID)
+            rootElement.style.filter = 'blur(0px)';
+            document.body.removeChild(validateBox)
+        }
+        else {
+            //console.log("WRONG PASSWORD");
+            let pwinput = document.getElementById('PWtoBeChecked')
+            //pwinput.style.backgroundColor = `rgba(199, 34, 34, 0.506)`;
+            pwinput.style.border = '2px solid red'
 
+        }
+    }
+    if (event.target.id === 'cancelBtn') {
+        let validateBox = document.querySelector('#delBox');
+        rootElement.style.filter = 'blur(0px)';
+        document.body.removeChild(validateBox)
+    }
     if (event.target.id === clickedObj.name) {
         await sendClickedListData(clickedObj)
+        await createUserFolder(clickedObj.id)
         location.assign('/user');
     }
+}
+
+async function validatePassword(dataID, id) {
+    document.body.insertAdjacentHTML('beforeend', showValidationBox());
+}
+
+function showValidationBox() {
+    return `
+            <div id="delBox">
+                <div id="PWtoBeCheckedContainer">
+                    <h1>PASSWORD:</h1>
+                    <input id="PWtoBeChecked" type="password" placeholder="Enter password to delete">
+                    <button id="okBtn">OK</button>
+                    <button id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+        `
+}
+
+async function realPW(id) {
+    let url = `/api/getPassword/${id}`
+    let response = await fetch(url);
+    let result = await response.json();
+    return result.password;
+}
+function givenPW() {
+    let givenpw = document.getElementById('PWtoBeChecked').value;
+    return givenpw
 }
 
 async function sendClickedListData(co) {
@@ -107,6 +160,11 @@ async function sendClickedListData(co) {
         method: 'post',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     })
+}
+
+async function createUserFolder(id) {
+    let url = `/api/mkdir/${id}`
+    fetch(url);
 }
 
 /* async function showChoosenPlaylist(co) {
@@ -130,7 +188,7 @@ function searchClickedList(e) {
 }
 
 function displayAllPlaylists(playlists) {
-    playlists.map(x => console.log(x.id + "'s name:", x.name));
+    //playlists.map(x => console.log(x.id + "'s name:", x.name));
     return `
             <div id='maindisplay'>
                 <h1>Select your playlist</h1>
@@ -179,11 +237,12 @@ function refreshDisplay() {
         location.assign('/')
     }
     else {
-        console.log('sima = ', allPlaylists.length, '[0] = ', allPlaylists[0].length)
+        //console.log('sima = ', allPlaylists.length, '[0] = ', allPlaylists[0].length)
         rootElement.insertAdjacentHTML('beforeend', displayAllPlaylists(allPlaylists[0]));
         rootElement.insertAdjacentHTML('beforeend', showCreatePlaylist());
     }
 }
+
 
 
 window.addEventListener('load', initRender);

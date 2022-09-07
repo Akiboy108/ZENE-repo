@@ -26,7 +26,7 @@ h3 {
 }
 
 /* ---------------------------INPUTS----------------------------- */
-#inputField {
+#myForm {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -54,4 +54,8 @@ h3 {
     border: none;
     outline: none;
     border-radius: 30px 30px 30px 30px;
+}
+
+#fuResume {
+    width: fit-content;
 }

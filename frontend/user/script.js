@@ -1,16 +1,15 @@
 let rootElement;
 let artist;
 let title;
-let file;
 
 async function initRender() {
     rootElement = document.querySelector('#root');
-    console.log('asd')
     //rootElement.addEventListener('click', globalClickHandler);
     await getGenres();
+
     artist = document.querySelector('#artist');
     title = document.querySelector('#title');
-    file = document.querySelector('#file');
+
 }
 
 function getInputValues() {
@@ -22,7 +21,7 @@ function getInputValues() {
 function clickSubmit(e) {
     e.preventDefault();
     if (e.target.id === 'submit') {
-        console.log(getInputValues())
+        getInputValues()
     }
 }
 
@@ -38,7 +37,7 @@ function showAddSongIfNone(genres) {
         <div id="addSongBox">
             <h1>Your playlist is currently empty!</h1>
             <h3>Add some songs to it.</h3>
-            <div id="inputField">
+            <div id="myForm"> 
                 <label for="artist">Artist </label>
                 <input class="input" id="artist" type="text" placeholder="Artist">
                 <br>
@@ -46,7 +45,7 @@ function showAddSongIfNone(genres) {
                 <input class="input" id="title" type="text" placeholder="Title">
                 <br>
                 <label for="file">File </label>
-                <input type="file" class="input" id="file" accept="audio/mp3, audio/wav">
+                <input name="fuResume" type="file" class="input" id="fuResume" accept="audio/mp3, audio/wav">
                 <br>
                 <label for="genre">Genre </label>
                 <select class="input" id="genre"  placeholder="Select Genre">
@@ -54,7 +53,7 @@ function showAddSongIfNone(genres) {
                    ${genres.map(x => showOptions(x))}
                 </select>
                 <br>
-                <button onClick="clickSubmit(event)" class="input" type="submit" id="submit">Submit</button>
+                <button class="input" type="submit" id="submit">Add File</button>
             </div>
         </div>
     `

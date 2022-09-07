@@ -1,3 +1,4 @@
+
 const root = document.querySelector('#root');
 let playlist = [];
 let name = '';
@@ -89,6 +90,7 @@ function fetchNewPlaylist(playlist) {
 function globalSubmitHandler(event) {
 
 }
+
 let pw1 = '';
 let pw2 = '';
 function globalInputHandler(event) {

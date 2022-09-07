@@ -121,7 +121,63 @@ td {
     width: min-content;
     height: 78px;
 }
+/* -----------------------PASSWORD---------------------------- */
+#PWtoBeCheckedContainer {
+    background-color: #202124e6;
+    padding: 30px;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 0);
+    border-radius: 15px;
+    width: fit-content;
+    position: relative;
+    filter: blur(0px);
+    display: flex;
+    vertical-align: middle;
+    flex-direction: column;
+    align-items: center;
+}
 
-button {
-    outline: 2px solid red;
+#delBox {
+    background-color: rgba(76, 76, 76, 0.285);
+    border: 1px solid grey;
+    border-radius: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 99.9%;
+    height: 99.5%;
+}
+
+#PWtoBeChecked {
+    padding: 10px;
+    border: none;
+    border-radius: 30px 30px 30px 30px;
+}
+
+
+
+#okBtn {
+    border: none;
+    margin-top: 5px;
+    padding: 10px 20px;
+    border-radius: 20px 20px 20px 20px;
+}
+
+#cancelBtn {
+    margin-top: 5px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px 20px 20px 20px;
+}
+
+#okBtn:hover {
+    cursor: pointer;
+    background-color: #bdc1c6;
+}
+
+#cancelBtn:hover {
+    cursor: pointer;
+    background-color: #bdc1c6;
 }

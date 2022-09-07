@@ -3,12 +3,14 @@
         {
             "id": 1,
             "name": "akos",
-            "akos": []
+            "akos": [],
+            "password": "asdasdasd"
         },
         {
             "id": 2,
-            "name": "asd",
-            "asd": []
+            "name": "valaki",
+            "valaki": [],
+            "password": "11111111"
         }
     ]
 }
