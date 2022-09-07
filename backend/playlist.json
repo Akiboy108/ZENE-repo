@@ -1,16 +1,3 @@
 {
-    "playlist": [
-        {
-            "id": 1,
-            "name": "akos",
-            "akos": [],
-            "password": "asdasdasd"
-        },
-        {
-            "id": 2,
-            "name": "valaki",
-            "valaki": [],
-            "password": "11111111"
-        }
-    ]
+    "playlist": []
 }
