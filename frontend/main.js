@@ -32,7 +32,7 @@ async function getPlaylists() {
     let response = await fetch(url);
     if (!response.ok || response === undefined) {
         rootElement.insertAdjacentHTML('beforeend', showCreatePlaylistIfNone());
-        throw new Error("No playlists", { cause: response });
+        console.log('%c No playlist to fetch', 'color: red; background: white')
     }
     else {
         let result = await response.json() //result => playlist.json                                
@@ -121,7 +121,7 @@ async function globalClickHandler(event) {
     if (event.target.id === clickedObj.name) {
         await sendClickedListData(clickedObj)
         await createUserFolder(clickedObj.id)
-        location.assign('/user');
+        location.assign(`/user/${clickedObj.name}`);
     }
 }
 
