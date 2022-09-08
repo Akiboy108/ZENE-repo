@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 
 // 👇️ "/home/john/Desktop/javascript"
-const __dirname = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend'
+const __dirname = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend/USERS'
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
