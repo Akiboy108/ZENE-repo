@@ -1,11 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-
-// 👇️ "/home/john/Desktop/javascript"
 const __dirname = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend/USERS'
 const app = express();
 app.use(express.json());
@@ -38,7 +34,7 @@ app.get('/api/mkdir/:id', (req, res) => {
     const choosenList = data.playlist.find(x => x.id === parseInt(req.params.id));
     fs.access(`${__dirname}/${choosenList.name}`, (error) => {
         if (error) {
-            fs.mkdir(path.join(__dirname, `${choosenList.name}`), (err) => {
+            fs.mkdir(path.join(__dirname, `${choosenList.name.split(' ').join('_')}`), (err) => {
                 if (err) {
                     return console.warn(err)
                 }
@@ -49,7 +45,6 @@ app.get('/api/mkdir/:id', (req, res) => {
             console.log('Given directory already exists!')
         }
     })
-
 })
 
 app.get('/api/personalplaylist', (req, res) => {//SEND DATA ABOUT ALL PL
