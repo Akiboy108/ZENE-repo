@@ -26,7 +26,7 @@ h3 {
 }
 
 /* ---------------------------INPUTS----------------------------- */
-#myForm {
+#form {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
