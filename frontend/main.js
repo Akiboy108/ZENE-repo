@@ -1,6 +1,7 @@
 let allPlaylists = [];
 let rootElement;
 let delSetID;
+let lastClickedName = '';
 
 async function initRender() {
     rootElement = document.querySelector('#root');
@@ -120,7 +121,7 @@ async function globalClickHandler(event) {
     }
     if (event.target.id === clickedObj.name) {
         await sendClickedListData(clickedObj)
-        await createUserFolder(clickedObj.id)
+        //await createUserFolder(clickedObj.id)
         location.assign(`/user/${clickedObj.name}`);
     }
 }
@@ -153,18 +154,15 @@ function givenPW() {
     return givenpw
 }
 
-async function sendClickedListData(co) {
+async function sendClickedListData(co) {//co = clicked object
     let url = `/api/sendData/:${co.name}`
     fetch(url, {
         body: JSON.stringify({ "id": co.id, "name": co.name }),
         method: 'post',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     })
-}
-
-async function createUserFolder(id) {
-    let url = `/api/mkdir/${id}`
-    fetch(url);
+    console.log(co.name);
+    lastClickedName = co.name
 }
 
 /* async function showChoosenPlaylist(co) {
