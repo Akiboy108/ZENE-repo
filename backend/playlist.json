@@ -1,3 +1,52 @@
 {
-    "playlist": []
+    "playlist": [
+        {
+            "id": 4,
+            "name": "q3948h7fhw",
+            "q3948h7fhw": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 5,
+            "name": "q34twe4f",
+            "q34twe4f": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 6,
+            "name": "ö8q34q3e",
+            "ö8q34q3e": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 7,
+            "name": "4q2xqaedsf",
+            "4q2xqaedsf": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 8,
+            "name": "23rqwdq",
+            "23rqwdq": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 9,
+            "name": "7683r2awsdas",
+            "7683r2awsdas": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 10,
+            "name": "9673dasddzaa",
+            "9673dasddzaa": [],
+            "password": "asdasdasd"
+        },
+        {
+            "id": 12,
+            "name": "ac_test_folder_2",
+            "ac_test_folder_2": [],
+            "password": "asdasdasd"
+        }
+    ]
 }
