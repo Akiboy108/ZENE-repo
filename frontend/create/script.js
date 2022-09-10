@@ -6,10 +6,12 @@ let newID;
 let input;
 let clickCounter = 0;
 let pwType = 'password';
+
 async function initRender() {
     root.addEventListener('input', globalInputHandler);
     root.addEventListener('click', globalClickHandler);
     root.addEventListener('submit', globalSubmitHandler);
+
 
     refreshDisplay();
 }
@@ -29,6 +31,7 @@ async function globalClickHandler(event) {
             if (pw1 === pw2) {
                 validPW()
                 fetchNewPlaylist(playlist)
+                autoCommit();
             }
             else {
                 invalidPW();
@@ -70,6 +73,11 @@ function decidePwType(pwinput, pwinputVal) {
         pwinput.type = 'password';
         pwinputVal.type = 'password';
     }
+}
+
+async function autoCommit() {
+    let url = `/api/autoCommit/${input.value.split(" ").join('_').toLowerCase()}`;
+    await fetch(url);
 }
 
 function fetchNewPlaylist(playlist) {
@@ -172,5 +180,6 @@ function refreshDisplay() {
     root.replaceChildren();
     root.insertAdjacentHTML('beforeend', createMainContainer(newID));
 }
+
 
 window.addEventListener('load', initRender);
