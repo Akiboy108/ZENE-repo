@@ -121,6 +121,7 @@ td {
     width: min-content;
     height: 78px;
 }
+
 /* -----------------------PASSWORD---------------------------- */
 #PWtoBeCheckedContainer {
     background-color: #202124e6;
@@ -145,9 +146,9 @@ td {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    position: absolute;
+    position: fixed;
     width: 99.9%;
-    height: 99.5%;
+    height: 100%;
 }
 
 #PWtoBeChecked {
