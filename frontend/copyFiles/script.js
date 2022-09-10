@@ -1,23 +1,42 @@
 let rootElement;
 let artist;
 let title;
-
+let file;
+let genre;
+let extension;
+let lastName = '';
 async function initRender() {
     rootElement = document.querySelector('#root');
-    rootElement.addEventListener('click', globalSubmitHandler);
+    rootElement.addEventListener('submit', globalSubmitHandler);
     await getGenres();
+    lastName = await getLastName();
     artist = document.querySelector('#artist');
     title = document.querySelector('#title');
+    file = document.querySelector('#file');
+    genre = document.querySelector('#genre');
 }
 
 //
 
 async function globalSubmitHandler(event) {
     event.preventDefault();
-    let url = `/api/uploadFile/${'akos'}`;
+    console.log(`Submit files to '${lastName}' folder...`);
+    let url = `/uploadSong/${lastName}`;
+    let fileName = file.files[0].name;
+    let splitByDot = fileName.split('.');
+    let extension = splitByDot[splitByDot.length - 1];
     fetch(url, {
+        body: JSON.stringify({
+            "folder": lastName,
+            "title": title.value,
+            "artist": artist.value,
+            "file": file.files[0].name,
+            "genre": genre.value,
+            "extension": extension,
+        }),
         method: 'post',
-    })
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+    });
 }
 
 /* function getInputValues() {
@@ -32,6 +51,14 @@ function clickSubmit(e) {
         getInputValues()
     }
 } */
+
+async function getLastName() {
+    let url = `/api/uploadFile/`;
+    let response = await fetch(url);
+    let result = await response.json();
+    console.log(`* * * You have clicked on ${result.name} list!`);
+    return result.name;
+}
 
 async function getGenres() {
     let url = `/api/genre`;
@@ -54,7 +81,7 @@ function showAddSongIfNone(genres) {
                     <input class="input" id="title" type="text" placeholder="Title">
                     <br>
                     <label for="file">File </label>
-                    <input name="myFile" type="file" class="admin_input" id="myFile" accept="audio/mp3, audio/wav">
+                    <input name="myFile" type="file" class="input" id="file" accept="audio/mp3, audio/wav">
                     <br>
                     <label for="genre">Genre </label>
                     <select class="input" id="genre"  placeholder="Select Genre">
@@ -62,7 +89,7 @@ function showAddSongIfNone(genres) {
                        ${genres.map(x => showOptions(x))}
                     </select>
                     <br>
-                    <input class="admin_submit" type="submit"/>
+                    <input class="input" type="submit"/>
                 </form>
             </div>
         </div>
