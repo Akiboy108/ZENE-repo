@@ -12,10 +12,12 @@ async function initRender() {
 
 //
 
-function globalSubmitHandler(event) {
-    if (event.target.id === 'submit') {
-        console.log('click')
-    }
+async function globalSubmitHandler(event) {
+    event.preventDefault();
+    let url = `/api/uploadFile/${'akos'}`;
+    fetch(url, {
+        method: 'post',
+    })
 }
 
 /* function getInputValues() {
@@ -44,7 +46,7 @@ function showAddSongIfNone(genres) {
             <h1>Your playlist is currently empty!</h1>
             <h3>Add some songs to it.</h3>
             <div id="myForm"> 
-                <form id="form">
+                <form action="/api/uploadFile" enctype="multipart/form-data" method="post" id="form">
                     <label for="artist">Artist </label>
                     <input class="input" id="artist" type="text" placeholder="Artist">
                     <br>
@@ -52,7 +54,7 @@ function showAddSongIfNone(genres) {
                     <input class="input" id="title" type="text" placeholder="Title">
                     <br>
                     <label for="file">File </label>
-                    <input name="fuResume" type="file" class="input" id="fuResume" accept="audio/mp3, audio/wav">
+                    <input name="myFile" type="file" class="admin_input" id="myFile" accept="audio/mp3, audio/wav">
                     <br>
                     <label for="genre">Genre </label>
                     <select class="input" id="genre"  placeholder="Select Genre">
@@ -60,7 +62,7 @@ function showAddSongIfNone(genres) {
                        ${genres.map(x => showOptions(x))}
                     </select>
                     <br>
-                    <button class="input" type="submit" id="submit">Add File</button>
+                    <input class="admin_submit" type="submit"/>
                 </form>
             </div>
         </div>
@@ -72,5 +74,7 @@ function showOptions(genres) {
         <option id="${genres.id}" value="${genres.genre}">${genres.genre}</option>
     `
 }
+
+//TODO check formidable
 
 window.addEventListener('load', initRender);
