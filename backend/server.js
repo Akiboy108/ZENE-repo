@@ -1,33 +1,100 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import multer from 'multer';
 import http from 'http';
+import simpleGit from 'simple-git'
 import formidable from 'formidable';
 import bodyParser from 'body-parser';
 
+const app = express();
+app.use(express.json());
+
+const git = simpleGit();
 const __dirname = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend/user';
 const __index_html = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend/copyFiles/index.html';
 const __style_css = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend/copyFiles/style.css';
 const __script_js = 'D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/frontend/copyFiles/script.js';
 
+app.get('/api/autoCommit/:name', async (req, res) => {
+    await git.add('./frontend/user');
+    await git.commit(`${req.params.name} folder added`);
+});
+/*==================================================================================================================================*/
+/*==================================================================================================================================*/
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // Uploads is the Upload_folder_name
+        cb(null, "D:/WEB/htdocs/Webfejlesztés/VS_Code/ZENE-repo/uploads")
+    },
+    filename: function (req, file, cb) {
+        console.error('! ! ! FILE ========> ', file);
+        cb(null, file.fieldname + "-" + Date.now() + ".mp3")
+    }
+})
 
+// Define the maximum size for uploading
+// picture i.e. 1 MB. it is optional
+const maxSize = 100 * 1000 * 1000;
 
-const app = express();
-app.use(express.json());
-//app.use(express.urlencoded({ extended: false }));
-app.use(
-    bodyParser.urlencoded({
-        extended: true,
+var upload = multer({
+    storage: storage,
+    limits: { fileSize: maxSize },
+    fileFilter: function (req, file, cb) {
+
+        // Set the filetypes, it is optional
+        var filetypes = /mp3|wav/;
+        var mimetype = filetypes.test(file.mimetype);
+
+        var extname = filetypes.test(path.extname(
+            file.originalname).toLowerCase());
+
+        if (mimetype && extname) {
+            return cb(null, true);
+        }
+
+        cb("Error: File upload only supports the "
+            + "following filetypes - " + filetypes);
+    }
+
+    // mypic is the name of file attribute
+}).single("myFile");
+
+app.get("/upload", function (req, res) {
+    res.render("Signup");
+})
+
+app.post("/uploadSong/:name", function (req, res, next) {
+    const data = JSON.parse(fs.readFileSync('./backend/playlist.json', 'utf8'));
+    const body = req.body;
+    const playlist = data.playlist.find(x => x.name === (req.params.name));
+    let newID = playlist[req.params.name].reduce((prev, curr) => prev.id > curr.id ? prev : curr, { id: 0 }).id + 1;
+    const newObj = { id: newID, folder: body.folder, artist: body.artist, title: body.title, file: body.file, genre: body.genre, extension: body.extension };
+    playlist[req.params.name].push(newObj);
+
+    fs.writeFileSync('./backend/playlist.json', JSON.stringify(data, undefined, 4), 'utf8');
+    // Error MiddleWare for multer file upload, so if any
+    // error occurs, the image would not be uploaded!
+    upload(req, res, function (err) {
+        if (err) {
+            // ERROR occurred (here it can be occurred due
+            // to uploading image of size greater than
+            // 1MB or uploading different file type)
+            res.send(err)
+        }
+        else {
+            // SUCCESS, image successfully uploaded
+            res.send("Success, Song uploaded!")
+        }
     })
-);
+})
+/*==================================================================================================================================*/
+/*==================================================================================================================================*/
 
-/* app.set("view engine", "ejs")
-app.set('views', path.join(__dirname, 'views'))
+app.set("view engine", "ejs")
+app.set('views', path.join(__dirname, "views"))
 app.use(express.static(`${__dirname}/public`))
 
-app.use('/', (req, res) => {
-    res.status(200).render('index');
-}); */
 
 app.get('/api/genre', (req, res) => {
     const data = JSON.parse(fs.readFileSync('./backend/genres.json', 'utf8'));
@@ -73,60 +140,11 @@ app.get('/api/filterByGenre', (req, res) => {
     res.send(data);
 });
 
-app.post('/api/uploadFile/:name', async (req, res, next) => {
-
-    const form = new formidable.IncomingForm();
-    const uploadFolder = `${__dirname}/${req.params.name}`
-    form.multiples = true;
-    form.maxFileSize = 50 * 1024 * 1024; // 5MB
-    form.uploadDir = uploadFolder;
-    console.log('* * *', form);
-
-    // Parsing
-    form.parse(req, async (err, fields, files) => {
-        console.log(fields);
-        console.log(files);
-        if (err) {
-            console.log("Error parsing the files");
-            return res.status(400).json({
-                status: "Fail",
-                message: "There was an error parsing the files",
-                error: err,
-            });
-        }
-    });
-
-    if (!files.myFile.length) {
-        const file = files.myFile;
-        const isValid = isFileValid(file);
-        const fileName = encodeURIComponent(file.name.replace(/\s/g, '_'));
-
-        if (!isValid) {
-            return res.status(400).json({
-                status: 'Fail',
-                message: 'This file type is not valid!'
-            });
-        }
-        try {
-            fs.renameSync(file.path, join(uploadFolder, fileName))
-        } catch (error) {
-            console.log('! ! ! ', error)
-        }
-
-        try {
-            const newFile = await File.create({
-                name: `files/${fileName}`
-            })
-            return res.status(200).json({
-                status: 'success',
-                message: 'File created sucesfully!'
-            });
-        } catch (error) {
-            res.json({
-                error
-            })
-        }
-    }
+app.get('/api/uploadFile', (req, res) => {
+    const data = JSON.parse(fs.readFileSync('./backend/clickedList.json', 'utf8'));
+    const info = data.list[data.list.length - 1];
+    console.log('* * * NAME: ', info.name)
+    res.send(info)
 });
 
 app.post('/api/sendData/:id', (req, res) => { //SEND INFO ABOUT LAST OPENED PLAYLIST
@@ -135,7 +153,7 @@ app.post('/api/sendData/:id', (req, res) => { //SEND INFO ABOUT LAST OPENED PLAY
     const clData = { id: body.id, name: body.name }
     data.list.push(clData);
     fs.writeFileSync('./backend/clickedList.json', JSON.stringify(data, undefined, 4), 'utf8');
-    res.send(clData);
+    res.send(clData.name);
 });
 
 app.post('/api/add/:name', (req, res) => { //CREATE NEW PLAYLIST
@@ -151,6 +169,12 @@ app.post('/api/add/:name', (req, res) => { //CREATE NEW PLAYLIST
     fs.access(`${__dirname}/${choosenList.name}`, (error) => { //Checks if given directory already exists
         if (error) {
             fs.mkdir(path.join(__dirname, `${choosenList.name.split(' ').join('_')}`), (err) => {//Creates new direcotry
+                if (err) {
+                    console.log('* * * Folder cannot be created!')
+                }
+                console.log("* * * Folder successfully created...")
+            });
+            fs.mkdir(path.join(__dirname, `${choosenList.name.split(' ').join('_')}/music`), (err) => {//Creates new direcotry for musics
                 if (err) {
                     console.log('* * * Folder cannot be created!')
                 }
